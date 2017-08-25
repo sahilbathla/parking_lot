@@ -1,6 +1,9 @@
 require_relative './slots'
 
 class ParkingLot
+
+  PARKING_FULL_MESSAGE = 'Sorry, parking lot is full'
+
   attr_accessor :slots
 
   def initialize(number_of_slots)
@@ -22,8 +25,12 @@ class ParkingLot
   end
 
   def leave(slot_number)
-    slots[slot_number.to_i - 1].free
-    puts "Slot number #{ slot_number.to_i - 1 } is free "
+    if slot_number > 0 && slot_number <= slots.length
+      slots[slot_number.to_i - 1].free
+      puts "Slot number #{ slot_number.to_i - 1 } is free "
+    else
+      puts "Invalid slot number"
+    end
   end
 
   def status
@@ -58,7 +65,7 @@ class ParkingLot
     end
 
     def parking_lot_full_handler
-      puts "Sorry, parking lot is full"
+      puts ParkingLot::PARKING_FULL_MESSAGE
     end
 
     def filter_cars(filtered_value, filter_by, filter)
